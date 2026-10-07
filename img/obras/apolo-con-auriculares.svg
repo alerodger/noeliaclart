@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 700" width="700" height="700">
+  
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" seed="22"/>
+      <feColorMatrix values="0 0 0 0 0.12  0 0 0 0 0.1  0 0 0 0 0.08  0 0 0 0.22 0"/>
+    </filter>
+    <filter id="charcoal" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="25" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="6"/>
+    </filter>
+    <filter id="spray" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.6" seed="29" result="dots"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="14" result="blur"/>
+      <feComposite in="blur" in2="dots" operator="in"/>
+    </filter>
+    <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(38)">
+      <rect width="7" height="7" fill="#d9d2c4"/>
+      <line x1="0" y1="0" x2="0" y2="7" stroke="#6b645a" stroke-width="1.6" opacity=".55"/>
+    </pattern>
+    <pattern id="cross" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(-30)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#2a2724" stroke-width="2" opacity=".6"/>
+      <line x1="0" y1="3" x2="6" y2="3" stroke="#2a2724" stroke-width="1.2" opacity=".35"/>
+    </pattern>
+    <linearGradient id="shade" x1="0" x2="1">
+      <stop offset="0" stop-color="#1d1b19" stop-opacity=".55"/>
+      <stop offset=".6" stop-color="#1d1b19" stop-opacity=".05"/>
+      <stop offset="1" stop-color="#fff" stop-opacity=".25"/>
+    </linearGradient>
+  </defs>
+  <rect width="700" height="700" fill="#f3eee4"/>
+  <circle cx="160" cy="180" r="140" fill="#f2c230" opacity="0.55" filter="url(#spray)"/><circle cx="560" cy="560" r="120" fill="#3a7bd5" opacity="0.5" filter="url(#spray)"/>
+  <g transform="translate(98.0 28.0) scale(0.840)">
+    
+    
+    <g filter="url(#charcoal)">
+      <path d="M 240 600 C 245 540 235 500 215 460 C 190 410 185 340 205 280 C 230 200 300 170 360 185 C 400 195 420 225 425 260 C 428 285 425 300 432 315 C 440 330 452 345 455 360 C 458 372 450 378 440 380 C 445 392 446 400 440 408 C 446 415 444 425 436 430 C 440 445 438 460 425 470 C 410 478 395 478 385 480 C 375 510 372 560 380 600 L 470 640 C 520 660 540 720 540 800 L 120 800 C 120 720 150 660 240 600 Z" fill="url(#hatch)"/>
+      
+      <path d="M 240 600 C 245 540 235 500 215 460 C 190 410 185 340 205 280 C 230 200 300 170 360 185 C 400 195 420 225 425 260 C 428 285 425 300 432 315 C 440 330 452 345 455 360 C 458 372 450 378 440 380 C 445 392 446 400 440 408 C 446 415 444 425 436 430 C 440 445 438 460 425 470 C 410 478 395 478 385 480 C 375 510 372 560 380 600 L 470 640 C 520 660 540 720 540 800 L 120 800 C 120 720 150 660 240 600 Z" fill="url(#shade)"/>
+      <path d="M 240 600 C 245 540 235 500 215 460 C 190 410 185 340 205 280 C 225 330 250 420 300 470 C 330 500 360 520 380 600 Z" fill="url(#cross)" opacity=".7"/>
+      <path d="M 205 285 C 225 205 300 172 360 186 C 330 200 300 215 285 250 C 270 230 245 240 240 270 C 225 262 212 272 205 285 Z" fill="url(#cross)"/>
+      <path d="M 240 600 C 245 540 235 500 215 460 C 190 410 185 340 205 280 C 230 200 300 170 360 185 C 400 195 420 225 425 260 C 428 285 425 300 432 315 C 440 330 452 345 455 360 C 458 372 450 378 440 380 C 445 392 446 400 440 408 C 446 415 444 425 436 430 C 440 445 438 460 425 470 C 410 478 395 478 385 480 C 375 510 372 560 380 600 L 470 640 C 520 660 540 720 540 800 L 120 800 C 120 720 150 660 240 600 Z" fill="none" stroke="#1d1b19" stroke-width="3.2" stroke-linejoin="round"/>
+      <path d="M 292 330 C 280 320 268 335 272 355 C 276 372 290 380 298 370" fill="none" stroke="#1d1b19" stroke-width="2.4"/>
+      <path d="M 400 300 C 410 295 420 297 424 302" fill="none" stroke="#1d1b19" stroke-width="3" stroke-linecap="round"/>
+    </g>
+    <path d="M 230 360 C 200 190 410 140 432 290" fill="none" stroke="#f2c230" stroke-width="20" stroke-linecap="round"/><ellipse cx="282" cy="350" rx="34" ry="50" fill="#f2c230" stroke="#1d1b19" stroke-width="4"/><ellipse cx="282" cy="350" rx="16" ry="26" fill="#1d1b19" opacity=".25"/>
+  </g>
+  <text x="336" y="633" font-family="Impact, Arial Black, sans-serif" font-weight="900" letter-spacing="2" font-size="31" fill="#1d1b19" opacity="0.36" transform="rotate(-10 336 633)">♪ ♫</text>
+    <text x="287" y="576" font-family="Impact, Arial Black, sans-serif" font-weight="900" letter-spacing="2" font-size="50" fill="#3a7bd5" opacity="0.43" transform="rotate(-0 287 576)">BEAT</text>
+    <text x="73" y="318" font-family="Impact, Arial Black, sans-serif" font-weight="900" letter-spacing="2" font-size="57" fill="#3a7bd5" opacity="0.51" transform="rotate(-2 73 318)">APOLO FM</text>
+    <text x="143" y="626" font-family="Impact, Arial Black, sans-serif" font-weight="900" letter-spacing="2" font-size="60" fill="#3a7bd5" opacity="0.51" transform="rotate(-5 143 626)">♪ ♫</text>
+  <rect width="700" height="700" filter="url(#grain)"/>
+  <text x="676" y="678" text-anchor="end" font-family="Brush Script MT, cursive" font-size="22" fill="#1d1b19" opacity=".7">noeliaclart</text>
+</svg>
