@@ -21,6 +21,18 @@ Abre `index.html` con doble clic. (o `python3 -m http.server` y entra en http://
 
 La galería se ordena sola en mosaico, sea cual sea la proporción de cada foto.
 
+## Añadir eventos
+
+En `script.js`, lista `EVENTOS`: copia un bloque `{ ... }` y cambia título, fecha (`"AAAA-MM-DD"`),
+`fechaFin` (opcional, para exposiciones de varios días), lugar, tipo, descripción y `enlace` (opcional).
+No hace falta ordenarlos ni moverlos: la web los separa sola en **Próximos** y **Pasados** según la fecha de hoy.
+
+## Modo claro / oscuro
+
+El botón de la luna/sol en el menú cambia el tema. La primera vez se usa el del sistema del visitante,
+y después se recuerda su elección. Los colores están al principio de `styles.css`
+(`:root` para claro y `:root[data-theme="dark"]` para oscuro).
+
 ## Publicarla gratis
 
 ### Opción A — Netlify Drop (la más fácil, 1 minuto)

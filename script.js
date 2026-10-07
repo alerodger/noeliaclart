@@ -115,6 +115,76 @@ const OBRAS = [
 ];
 
 // ============================================================
+//  EVENTOS — Añade aquí cada evento. No hace falta moverlos:
+//  la web los separa sola en "Próximos" y "Pasados" según la
+//  fecha de hoy y los ordena.
+//  fecha / fechaFin: "AAAA-MM-DD" (fechaFin es opcional)
+//  enlace: opcional
+// ============================================================
+const EVENTOS = [
+  {
+    titulo: "Dibujo en directo · Feria de Arte Joven",
+    fecha: "2026-10-24",
+    fechaFin: "2026-10-25",
+    lugar: "Granada",
+    tipo: "En directo",
+    descripcion: "Dos días dibujando un busto clásico a carboncillo delante del público. Pasa a ver cómo avanza la pieza.",
+  },
+  {
+    titulo: "Taller de retrato a grafito",
+    fecha: "2026-11-14",
+    lugar: "Jaén",
+    tipo: "Taller",
+    descripcion: "Taller de iniciación de 4 horas: proporciones, valores y texturas de piel. Plazas limitadas, material incluido.",
+    enlace: "https://www.instagram.com/noeliaclart/",
+  },
+  {
+    titulo: "Exposición colectiva «Clásicos de barrio»",
+    fecha: "2026-12-12",
+    fechaFin: "2026-12-20",
+    lugar: "Granada",
+    tipo: "Exposición",
+    descripcion: "Muestra colectiva de arte urbano y figurativo. Expondré Medusa de barrio y Atenea, turno de noche.",
+  },
+  {
+    titulo: "Mercado de ilustración de primavera",
+    fecha: "2027-03-06",
+    lugar: "Jaén",
+    tipo: "Mercado",
+    descripcion: "Láminas, originales y agenda abierta para encargos de retrato.",
+  },
+  {
+    titulo: "Festival de muralismo · live drawing",
+    fecha: "2026-09-19",
+    lugar: "Granada",
+    tipo: "En directo",
+    descripcion: "Dibujo en gran formato junto a muralistas del festival.",
+  },
+  {
+    titulo: "Exposición individual «Mármol y spray»",
+    fecha: "2026-06-20",
+    fechaFin: "2026-07-05",
+    lugar: "Jaén",
+    tipo: "Exposición",
+    descripcion: "Mi primera individual: doce piezas que cruzan la escultura clásica con el arte urbano.",
+  },
+  {
+    titulo: "Taller de carboncillo",
+    fecha: "2026-04-11",
+    lugar: "Granada",
+    tipo: "Taller",
+    descripcion: "Taller de contraste y manchado con carboncillo.",
+  },
+  {
+    titulo: "Mercadillo navideño de arte",
+    fecha: "2025-12-13",
+    lugar: "Jaén",
+    tipo: "Mercado",
+    descripcion: "Venta de láminas y encargos de retrato para regalar en Navidad.",
+  },
+];
+
+// ============================================================
 //  Galería y visor
 // ============================================================
 const gallery = document.getElementById("gallery");
@@ -202,5 +272,82 @@ document.querySelectorAll(".nav__links a").forEach((a) =>
   })
 );
 
+// ============================================================
+//  Eventos: próximos / pasados según la fecha de hoy
+// ============================================================
+const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+
+function aFecha(texto) {
+  const [a, m, d] = texto.split("-").map(Number);
+  return new Date(a, m - 1, d);
+}
+
+function rango(ev) {
+  if (!ev.fechaFin) return "";
+  const ini = aFecha(ev.fecha);
+  const fin = aFecha(ev.fechaFin);
+  return ini.getMonth() === fin.getMonth()
+    ? `Del ${ini.getDate()} al ${fin.getDate()} de ${MESES[fin.getMonth()]}`
+    : `Del ${ini.getDate()} ${MESES[ini.getMonth()]} al ${fin.getDate()} ${MESES[fin.getMonth()]}`;
+}
+
+function htmlEvento(ev, clase = "") {
+  const f = aFecha(ev.fecha);
+  const lugar = [rango(ev), ev.lugar].filter(Boolean).join(" · ");
+  return `
+    <li class="event ${clase}">
+      <div class="event__date">
+        <span class="event__day">${f.getDate()}</span>
+        <span class="event__month">${MESES[f.getMonth()]} ${f.getFullYear()}</span>
+      </div>
+      <div class="event__info">
+        <h4>${ev.titulo}</h4>
+        <p class="event__place">${lugar}</p>
+        <p class="event__desc">${ev.descripcion}</p>
+        ${ev.enlace ? `<a class="event__link" href="${ev.enlace}" target="_blank" rel="noopener">Más información →</a>` : ""}
+      </div>
+      <span class="event__type">${ev.tipo}</span>
+    </li>`;
+}
+
+function pintarEventos() {
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  // Un evento sigue siendo "próximo" mientras no haya terminado
+  const termina = (ev) => aFecha(ev.fechaFin || ev.fecha);
+
+  const proximos = EVENTOS.filter((ev) => termina(ev) >= hoy)
+    .sort((a, b) => aFecha(a.fecha) - aFecha(b.fecha));
+  const pasados = EVENTOS.filter((ev) => termina(ev) < hoy)
+    .sort((a, b) => aFecha(b.fecha) - aFecha(a.fecha));
+
+  document.getElementById("eventos-proximos").innerHTML = proximos.length
+    ? proximos.map((ev, i) => htmlEvento(ev, i === 0 ? "event--next" : "")).join("")
+    : `<li class="events__empty">Ahora mismo no hay eventos programados. Sígueme en
+       <a href="https://www.instagram.com/noeliaclart/" target="_blank" rel="noopener">Instagram</a> para enterarte de los próximos.</li>`;
+
+  document.getElementById("eventos-pasados").innerHTML = pasados.length
+    ? pasados.map((ev) => htmlEvento(ev)).join("")
+    : `<li class="events__empty">Todavía no hay eventos pasados.</li>`;
+}
+
+// ============================================================
+//  Modo claro / oscuro
+// ============================================================
+const botonTema = document.getElementById("theme-toggle");
+
+function aplicarTema(tema) {
+  document.documentElement.dataset.theme = tema;
+  botonTema.setAttribute("aria-label", tema === "dark" ? "Cambiar a modo claro" : "Cambiar a modo oscuro");
+}
+
+botonTema.addEventListener("click", () => {
+  const nuevo = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  aplicarTema(nuevo);
+  try { localStorage.setItem("tema", nuevo); } catch (e) {}
+});
+aplicarTema(document.documentElement.dataset.theme || "light");
+
 document.getElementById("year").textContent = new Date().getFullYear();
 pintarGaleria("todas");
+pintarEventos();
